@@ -71,10 +71,16 @@ Use:
 data.content   // the quote text
 data.author    // the author
 */
-{
-  "content": "Do not watch the clock. Do what it does. Keep going.",
-  "author": "Sam Levenson"
-} 
+const btn1 = document.getElementById("t3-loadQuote");
+btn1.addEventListener("click", function () {
+    fetch("https://dummyjson.com/quotes/random")
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("t3-quote").innerHTML = data.content("Do not watch the clock. Do what it does. Keep going.");
+            document.getElementById("t3-author").innerHTML = data.author("Sam Levenson");
+        });
+});
+
 
 /*  
 =======================================
@@ -100,3 +106,17 @@ data.main.temp      → temperature (°C)
 data.main.humidity  → humidity (%)
 data.wind.speed     → wind speed (m/s)
 */
+const btn2 = document.getElementById("t4-loadWx");
+btn2.addEventListener("click", function () {
+    const base  = "https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=YOUR_API_KEY&units=metric";
+    const city  = "Dammam";
+    const units = "metric";
+    const key   = "https://openweathermap.org/api";  // replace with your key for this lab
+    fetch(base)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("t4-temp").innerHTML = data.main.temp;
+            document.getElementById("t4-hum").innerHTML = data.main.humidity;
+            document.getElementById("t4-wind").innerHTML = data.wind.speed;
+        });
+});
