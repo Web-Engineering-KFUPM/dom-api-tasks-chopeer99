@@ -20,7 +20,50 @@ inside the <p> element with id="t1-msg".
 document.getElementById("t1-msg").innerHTML = "Hello, World!";
 */
 document.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("t1-msg").innerHTML = "Hello, World!";
+    document.getElementById("t1-msg").innerHTML = "Hello, World!";
+
+    const btn = document.getElementById("t2-btn");
+    const text = document.getElementById("t2-status");
+    btn.addEventListener("click", function () {
+        text.innerHTML = "You clicked the button!";
+    });
+
+    const btn1 = document.getElementById("t3-loadQuote");
+    btn1.addEventListener("click", function () {
+        fetch("https://dummyjson.com/quotes/random")
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("t3-quote").innerHTML = data.quote;
+                document.getElementById("t3-author").innerHTML = data.author;
+            });
+    });
+
+    const btn2 = document.getElementById("t4-loadWx");
+    btn2.addEventListener("click", function () {
+        const city = "Dammam";
+        const units = "metric";
+        const apiKey = "https://openweathermap.org/api"; // Replace "YOUR_API_KEY" with your actual key
+        const base = "https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=API_KEY=metric";
+        const errorMsg = document.getElementById("t4-err");
+        
+        fetch(base)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                document.getElementById("t4-temp").innerHTML = data.main.temp;
+                document.getElementById("t4-hum").innerHTML = data.main.humidity;
+                document.getElementById("t4-wind").innerHTML = data.wind.speed;
+                errorMsg.innerHTML = "";
+            })
+            .catch(e => {
+                errorMsg.innerHTML = `Error: Please check your API key and network connection.`;
+                console.error("There was a problem with the fetch operation: " + e.message);
+            });
+    });
 });
 /*  
 =======================================
@@ -41,10 +84,7 @@ button.addEventListener("click", function () {
     // change text here
 });
 */
-const btn = document.getElementById("t2-status");
-btn.addEventListener("click", function () {
-    <p id="t2-status">You clicked the button!</p>
-}); 
+
 
 /*  
 =======================================
@@ -72,15 +112,7 @@ Use:
 data.content   // the quote text
 data.author    // the author
 */
-const btn1 = document.getElementById("t3-loadQuote");
-btn1.addEventListener("click", function () {
-    fetch("https://dummyjson.com/quotes/random")
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("t3-quote").innerHTML = data.content;
-            document.getElementById("t3-author").innerHTML = data.author;
-        });
-});
+
 
 
 /*  
@@ -107,17 +139,3 @@ data.main.temp      → temperature (°C)
 data.main.humidity  → humidity (%)
 data.wind.speed     → wind speed (m/s)
 */
-const btn2 = document.getElementById("t4-loadWx");
-btn2.addEventListener("click", function () {
-    const base  = "https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=YOUR_API_KEY&units=metric";
-    const city  = "Dammam";
-    const units = "metric";
-    const key   = "https://openweathermap.org/api";  // replace with your key for this lab
-    fetch(base)
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById("t4-temp").innerHTML = data.main.temp;
-            document.getElementById("t4-hum").innerHTML = data.main.humidity;
-            document.getElementById("t4-wind").innerHTML = data.wind.speed;
-        });
-});
