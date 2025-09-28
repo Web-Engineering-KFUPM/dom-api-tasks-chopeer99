@@ -19,8 +19,9 @@ inside the <p> element with id="t1-msg".
 💡 Hint:
 document.getElementById("t1-msg").innerHTML = "Hello, World!";
 */
-document.getElementById("t1-msg").innerHTML = "Hello, World!";
-
+document.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("t1-msg").innerHTML = "Hello, World!";
+});
 /*  
 =======================================
 TODO2: Interaction Corner
@@ -76,8 +77,8 @@ btn1.addEventListener("click", function () {
     fetch("https://dummyjson.com/quotes/random")
         .then(response => response.json())
         .then(data => {
-            document.getElementById("t3-quote").innerHTML = data.content("Do not watch the clock. Do what it does. Keep going.");
-            document.getElementById("t3-author").innerHTML = data.author("Sam Levenson");
+            document.getElementById("t3-quote").innerHTML = data.content;
+            document.getElementById("t3-author").innerHTML = data.author;
         });
 });
 
