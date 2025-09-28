@@ -33,6 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch("https://dummyjson.com/quotes/random")
             .then(response => response.json())
             .then(data => {
+                // Correct property name is "quote", not "content"
                 document.getElementById("t3-quote").innerHTML = data.quote;
                 document.getElementById("t3-author").innerHTML = data.author;
             });
@@ -42,7 +43,8 @@ document.addEventListener("DOMContentLoaded", function () {
     btn2.addEventListener("click", function () {
         const city = "Dammam";
         const units = "metric";
-        const apiKey = "https://openweathermap.org/api"; // Replace "YOUR_API_KEY" with your actual key
+        const apiKey = "1581de6cd2fc29843d129ea6be4375d7"; 
+        
         const base = "https://api.openweathermap.org/data/2.5/weather?q=Dammam&appid=API_KEY=metric";
         const errorMsg = document.getElementById("t4-err");
         
@@ -54,12 +56,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 return response.json();
             })
             .then(data => {
+                // Display the weather data.
                 document.getElementById("t4-temp").innerHTML = data.main.temp;
                 document.getElementById("t4-hum").innerHTML = data.main.humidity;
                 document.getElementById("t4-wind").innerHTML = data.wind.speed;
-                errorMsg.innerHTML = "";
+                errorMsg.innerHTML = ""; // Clear any previous error messages.
             })
             .catch(e => {
+                // Display a user-friendly error message.
                 errorMsg.innerHTML = `Error: Please check your API key and network connection.`;
                 console.error("There was a problem with the fetch operation: " + e.message);
             });
